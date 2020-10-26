@@ -47,10 +47,12 @@ class CustomGizmo extends Editor.Gizmo {
 
                 if (type === ToolType.Center) {
                     // 计算新的偏移量
-                    let t = cc.affineTransformClone( node.getWorldToNodeTransform() );
+                    let t = cc.AffineTransform.clone(node.getWorldToNodeTransform());
                     t.tx = t.ty = 0;
                     
-                    let d = cc.v2(cc.pointApplyAffineTransform(dx, dy, t)).add(startOffset);
+                    let outV = new cc.Vec2(0, 0);                    
+                    let d = cc.AffineTransform.transformVec2(outV, dx, dy, t).add(startOffset);
+
                     target.offset = d;
                     this.adjustValue(target, 'offset');
                 }
@@ -137,8 +139,8 @@ class CustomGizmo extends Editor.Gizmo {
         position = Editor.GizmosUtils.snapPixelWihVec2( position );
 
         // 获取世界坐标下圆半径
-        let p1 = node.convertToWorldSpaceAR(cc.p(target.radius, 0));
-        let p2 = node.convertToWorldSpaceAR(cc.p(0, 0));
+        let p1 = node.convertToWorldSpaceAR(new cc.Vec2(target.radius, 0));
+        let p2 = node.convertToWorldSpaceAR(new cc.Vec2(0, 0));
         let radius = p1.sub(p2).mag();
 
         // 对齐坐标，防止 svg 因为精度问题产生抖动

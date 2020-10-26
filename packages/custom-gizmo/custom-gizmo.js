@@ -37,7 +37,7 @@ class CustomGizmo extends Editor.Gizmo {
         let radius = target.radius;
 
         // 获取节点世界坐标
-        let worldPosition = node.convertToWorldSpaceAR(cc.p(0, 0));
+        let worldPosition = node.convertToWorldSpaceAR(new cc.Vec2(0, 0));
 
         // 转换世界坐标到 svg view 上
         // svg view 的坐标体系和节点坐标体系不太一样，这里使用内置函数来转换坐标
@@ -47,7 +47,7 @@ class CustomGizmo extends Editor.Gizmo {
         let p = Editor.GizmosUtils.snapPixelWihVec2( viewPosition );
 
         // 获取世界坐标下圆半径
-        let worldPosition2 = node.convertToWorldSpaceAR(cc.p(radius, 0));
+        let worldPosition2 = node.convertToWorldSpaceAR(new cc.Vec2(radius, 0));
         let worldRadius = worldPosition.sub(worldPosition2).mag();
         worldRadius = Editor.GizmosUtils.snapPixel(worldRadius);
 
